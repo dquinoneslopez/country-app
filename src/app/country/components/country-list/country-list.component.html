@@ -12,26 +12,46 @@
       </tr>
     </thead>
     <tbody>
-      @for(country of countries(); track country.cca2; let index = $index) {
-      <tr>
-        <td>{{ index + 1 }}</td>
-        <td>{{ country.flag }}</td>
-        <td>
-          <img
-            [src]="country.flagSvg"
-            [alt]="country.name + ' flag'"
-            class="w-10"
-          />
-        </td>
-        <td>{{ country.name }}</td>
-        <td>{{ country.capital }}</td>
-        <td>
-          <span class="badge-secondary">{{ country.population | number }}</span>
-        </td>
-        <td>
-          <a class="link-primary cursor-pointer">More info</a>
-        </td>
-      </tr>
+      @for (country of countries(); track country.cca2; let index = $index) {
+        <tr>
+          <td>{{ index + 1 }}</td>
+          <td>{{ country.flag }}</td>
+          <td>
+            <img
+              [src]="country.flagSvg"
+              [alt]="country.name + ' flag'"
+              class="w-10"
+            />
+          </td>
+          <td>{{ country.name }}</td>
+          <td>{{ country.capital }}</td>
+          <td>
+            <span class="badge-secondary">{{
+              country.population | number
+            }}</span>
+          </td>
+          <td>
+            <a class="link-primary cursor-pointer">More info</a>
+          </td>
+        </tr>
+      }
+
+      @if (errorMessage()) {
+        <tr>
+          <td colspan="8" class="text-center text-red-500">
+            {{ errorMessage() }}
+          </td>
+        </tr>
+      }
+      @if (isLoading()) {
+        <tr>
+          <td colspan="8" class="text-center">Loading...</td>
+        </tr>
+      }
+      @if (isEmpty() && !isLoading()) {
+        <tr>
+          <td colspan="8" class="text-center">No countries found.</td>
+        </tr>
       }
     </tbody>
   </table>
